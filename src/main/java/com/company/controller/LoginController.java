@@ -43,10 +43,8 @@ public class LoginController extends HttpServlet {
     }
 
     private void loggingForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws ServletException, IOException {
-        req.setAttribute("login", loggedUser.getLogin());
-        req.setAttribute("type", loggedUser.getUserType());
+        req.getSession().setAttribute("login", loggedUser.getLogin());
+        req.getSession().setAttribute("type", loggedUser.getUserType());
         req.getRequestDispatcher("/menu").forward(req, resp);
     }
-
-
 }

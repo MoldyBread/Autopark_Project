@@ -12,8 +12,14 @@ import java.io.IOException;
 public class MainMenuController extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/driver.jsp");
+        requestDispatcher.forward(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/main.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/driver.jsp");
         requestDispatcher.forward(req,resp);
     }
 }
