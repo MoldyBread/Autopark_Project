@@ -1,9 +1,5 @@
-package com.company;
+package com.company.controller;
 
-import com.company.dao.implementation.AdminDaoImpl;
-import com.company.dao.implementation.Connector;
-import com.company.dao.implementation.DriverDaoImpl;
-import com.company.entity.users.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class MainServlet extends HttpServlet {
+public class MainMenuController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

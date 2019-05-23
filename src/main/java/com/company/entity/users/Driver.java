@@ -5,7 +5,7 @@ public class Driver extends User{
     private final String surname;
     private boolean accepted;
 
-    public Driver(Builder builder) {
+    private Driver(Builder builder) {
         super(builder);
         this.name = builder.name;
         this.surname = builder.surname;

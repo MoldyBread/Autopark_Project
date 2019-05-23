@@ -2,7 +2,25 @@ package com.company.entity.users;
 
 
 public class Admin extends User{
-    public Admin(Long id, String login, String password) {
-        super(id, login, password, UserType.ADMIN);
+
+    private Admin(Builder builder) {
+        super(builder);
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder extends User.AbstractBuilder {
+
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public Admin build() {
+            return new Admin(this);
+        }
+
     }
 }

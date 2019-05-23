@@ -6,12 +6,12 @@ public abstract class User {
     private final String password;
     private final UserType userType;
 
-    protected User(Long id, String login, String password, UserType userType) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.userType = userType;
-    }
+//    protected User(Long id, String login, String password, UserType userType) {
+//        this.id = id;
+//        this.login = login;
+//        this.password = password;
+//        this.userType = userType;
+//    }
 
     protected User(AbstractBuilder builder) {
         this.id = builder.id;
@@ -20,7 +20,7 @@ public abstract class User {
         this.userType = builder.userType;
     }
 
-    public static abstract class AbstractBuilder<T extends AbstractBuilder> {
+    public static abstract class AbstractBuilder<T extends AbstractBuilder,E extends User> {
         private  Long id;
         private  String login;
         private  String password;
@@ -48,7 +48,7 @@ public abstract class User {
             return self();
         }
 
-        public abstract Driver build();
+        public abstract E build();
 
 
     }

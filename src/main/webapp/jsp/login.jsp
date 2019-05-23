@@ -4,7 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/menu" method="post">
+<form action="" method="post">
     <table style="with: 50%">
         <tr>
             <td>Login</td>

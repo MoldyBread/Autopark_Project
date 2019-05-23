@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class DriverDaoImpl extends UserDaoImpl implements DriverDao {
-    public DriverDaoImpl(String table, Connector connector) {
-        super(table, connector);
+    public DriverDaoImpl(Connector connector) {
+        super("drivers", connector);
     }
 
     @Override

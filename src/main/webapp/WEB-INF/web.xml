@@ -7,18 +7,30 @@
 
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>com.company.LoginServlet</servlet-class>
+        <servlet-class>com.company.controller.LoginController</servlet-class>
     </servlet>
 
     <servlet>
     <servlet-name>main</servlet-name>
-    <servlet-class>com.company.MainServlet</servlet-class>
+    <servlet-class>com.company.controller.MainMenuController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>start</servlet-name>
+        <servlet-class>com.company.controller.StartController</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>login</servlet-name>
-        <url-pattern></url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>start</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
 
     <servlet-mapping>
     <servlet-name>main</servlet-name>

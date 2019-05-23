@@ -3,6 +3,7 @@ package com.company.dao.implementation;
 import com.company.dao.AdminDao;
 import com.company.entity.users.Admin;
 import com.company.entity.users.User;
+import com.company.entity.users.UserType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +14,8 @@ import java.util.Optional;
 
 public class AdminDaoImpl extends UserDaoImpl implements AdminDao {
 
-    public AdminDaoImpl(String table, Connector connector) {
-        super(table, connector);
+    public AdminDaoImpl(Connector connector) {
+        super("admins", connector);
     }
 
     @Override
@@ -28,7 +29,12 @@ public class AdminDaoImpl extends UserDaoImpl implements AdminDao {
         String login = resultSet.getString("login");
         String password = resultSet.getString("psswrd");
 
-        return new Admin(id,login,password);
+        return Admin.builder()
+                .withId(id)
+                .withLogin(login)
+                .withPassword(password)
+                .withUserType(UserType.ADMIN)
+                .build();
     }
 
 

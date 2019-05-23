@@ -1,4 +1,4 @@
-package com.company;
+package com.company.controller;
 
 import com.company.dao.implementation.AdminDaoImpl;
 import com.company.dao.implementation.Connector;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-public class LoginServlet extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,31 +27,25 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        Optional<User> opt = new AdminDaoImpl("admins",new Connector()).findByLoginAndPassword(login, password);
-
-        PrintWriter writer = resp.getWriter();
-
-        User loggedUser;
+        Optional<User> opt = new AdminDaoImpl(new Connector()).findByLoginAndPassword(login, password);
         if(opt.isPresent()){
-            loggedUser= opt.get();
-
-            req.setAttribute("user", loggedUser);
-
-            getServletContext().getRequestDispatcher("jsp/main.jsp").forward(req, resp);
-
-
+            loggingForward(req, resp, opt.get());
         }else{
-            opt = new DriverDaoImpl("drivers",new Connector()).findByLoginAndPassword(login, password);
+            opt = new DriverDaoImpl(new Connector()).findByLoginAndPassword(login, password);
             if(opt.isPresent()) {
-                loggedUser = opt.get();
-                req.setAttribute("login", loggedUser);
-//                req.setAttribute("type", loggedUser.getUserType().toString());
+                loggingForward(req, resp, opt.get());
 
-                getServletContext().getRequestDispatcher("jsp/main.jsp").forward(req, resp);
             }else {
+                PrintWriter writer = resp.getWriter();
                 writer.print("<h1>Not found</h1>");
             }
         }
+    }
+
+    private void loggingForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws ServletException, IOException {
+        req.setAttribute("login", loggedUser.getLogin());
+        req.setAttribute("type", loggedUser.getUserType());
+        req.getRequestDispatcher("/menu").forward(req, resp);
     }
 
 

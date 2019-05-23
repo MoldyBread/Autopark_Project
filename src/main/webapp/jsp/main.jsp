@@ -13,8 +13,8 @@
 <body>
 
 <h1>You are logged</h1>
-<p>Login: ${login}</p>
-<p>Type: ${type}</p>
+<p>Login: <%=request.getAttribute("login") %></p>
+<p>Type:  <%=request.getAttribute("type") %></p>
 
 
 </body>
