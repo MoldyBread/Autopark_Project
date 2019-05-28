@@ -12,11 +12,19 @@ public class Driver extends User{
         this.accepted = builder.accepted;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     public static Builder builder(){
         return new Builder();
     }
 
-    public static class Builder extends User.AbstractBuilder {
+    public static class Builder extends User.AbstractBuilder<Builder,Driver> {
         private String name;
         private String surname;
         private boolean accepted;

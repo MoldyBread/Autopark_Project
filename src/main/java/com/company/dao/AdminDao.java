@@ -1,4 +1,6 @@
 package com.company.dao;
 
-public interface AdminDao extends UserDao {
+import com.company.entity.users.Admin;
+
+public interface AdminDao extends UserDao<Admin> {
 }

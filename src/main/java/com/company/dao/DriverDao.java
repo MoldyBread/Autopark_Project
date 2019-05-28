@@ -1,4 +1,9 @@
 package com.company.dao;
 
-public interface DriverDao extends UserDao {
+import com.company.entity.users.Driver;
+
+import java.sql.SQLException;
+
+public interface DriverDao extends UserDao<Driver> {
+    void update(long id, boolean accepted) throws SQLException;
 }

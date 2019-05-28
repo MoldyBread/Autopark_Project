@@ -4,6 +4,6 @@ import com.company.entity.users.User;
 
 import java.util.Optional;
 
-public interface UserDao extends GenericDao<User> {
-    Optional<User> findByLoginAndPassword(String login, String password);
+public interface UserDao<T extends User> extends GenericDao<T> {
+    Optional<T> findByLoginAndPassword(String login, String password);
 }

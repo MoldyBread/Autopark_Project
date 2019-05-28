@@ -1,8 +1,12 @@
 package com.company.controller;
 
 import com.company.dao.implementation.AdminDaoImpl;
+import com.company.dao.implementation.BusDaoImpl;
 import com.company.dao.implementation.Connector;
 import com.company.dao.implementation.DriverDaoImpl;
+import com.company.entity.Bus;
+import com.company.entity.users.Admin;
+import com.company.entity.users.Driver;
 import com.company.entity.users.User;
 
 import javax.servlet.RequestDispatcher;
@@ -27,24 +31,46 @@ public class LoginController extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        Optional<User> opt = new AdminDaoImpl(new Connector()).findByLoginAndPassword(login, password);
-        if(opt.isPresent()){
-            loggingForward(req, resp, opt.get());
+        Optional<Admin> admin = new AdminDaoImpl(new Connector()).findByLoginAndPassword(login, password);
+        if(admin.isPresent()){
+            adminForward(req, resp, admin.get());
         }else{
-            opt = new DriverDaoImpl(new Connector()).findByLoginAndPassword(login, password);
-            if(opt.isPresent()) {
-                loggingForward(req, resp, opt.get());
+            Optional<Driver> driver = new DriverDaoImpl(new Connector()).findByLoginAndPassword(login, password);
+            if(driver.isPresent()) {
+                driverForward(req, resp, driver.get());
 
             }else {
-                PrintWriter writer = resp.getWriter();
-                writer.print("<h1>Not found</h1>");
+                req.getSession().setAttribute("notfound", 1);
+                RequestDispatcher rd = req.getRequestDispatcher("jsp/login.jsp");
+                rd.forward(req, resp);
+
             }
         }
     }
 
-    private void loggingForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws ServletException, IOException {
+    private void adminForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws ServletException, IOException {
         req.getSession().setAttribute("login", loggedUser.getLogin());
-        req.getSession().setAttribute("type", loggedUser.getUserType());
-        req.getRequestDispatcher("/menu").forward(req, resp);
+
+        req.getRequestDispatcher("/admin").forward(req, resp);
+    }
+
+    private void driverForward(HttpServletRequest req, HttpServletResponse resp, Driver loggedUser) throws ServletException, IOException {
+        req.getSession().setAttribute("id", loggedUser.getId());
+        req.getSession().setAttribute("name", loggedUser.getName());
+        req.getSession().setAttribute("surname", loggedUser.getSurname());
+
+        Optional<Bus> bus = new BusDaoImpl(new Connector()).findByDriverId(loggedUser.getId());
+
+        if(bus.isPresent()){
+            Bus cureentBus=bus.get();
+            req.getSession().setAttribute("plate", cureentBus.getPlate());
+            req.getSession().setAttribute("route", cureentBus.getRouteId().toString());
+        }
+        else{
+            req.getSession().setAttribute("route", -1);
+        }
+
+        RequestDispatcher rd = req.getRequestDispatcher("jsp/driver.jsp");
+        rd.forward(req, resp);
     }
 }

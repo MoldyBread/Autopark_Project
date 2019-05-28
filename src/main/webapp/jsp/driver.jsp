@@ -1,4 +1,4 @@
-<%@ page isELIgnored ="false" %>
+<%@ page isELIgnored="false" %>
 <%--
   Created by IntelliJ IDEA.
   User: dan
@@ -13,11 +13,20 @@
     <title>Main menu</title>
 </head>
 <body>
-<tr>
-<h1>You are logged</h1>
-    <p>Login: <td>${login}</td></p>
-    <p>Type:   <td>${type}</td></p>
-</tr>
+<h1>Welcome, ${name} ${surname}</h1>
+
+<c:if test="${route < 0}">
+    <p>You are not assigned to work place yet</p>
+</c:if>
+<c:if test="${route > 0}">
+    <p>Your work place:</p>
+    <P>Bus: ${plate}</P>
+    <p>Your route: ${route}</p>
+    <form action = "/driver" method="get">
+        <input type="submit" value="Approve work place">
+    </form>
+</c:if>
+
 
 </body>
 </html>

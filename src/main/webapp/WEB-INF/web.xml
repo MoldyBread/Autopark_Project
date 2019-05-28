@@ -11,8 +11,13 @@
     </servlet>
 
     <servlet>
-    <servlet-name>main</servlet-name>
-    <servlet-class>com.company.controller.MainMenuController</servlet-class>
+    <servlet-name>driver</servlet-name>
+    <servlet-class>com.company.controller.DriverController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>com.company.controller.AdminController</servlet-class>
     </servlet>
 
     <servlet>
@@ -33,9 +38,16 @@
 
 
     <servlet-mapping>
-    <servlet-name>main</servlet-name>
-    <url-pattern>/menu</url-pattern>
+    <servlet-name>driver</servlet-name>
+    <url-pattern>/driver</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+
 
 
 </web-app>

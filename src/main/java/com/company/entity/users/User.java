@@ -6,12 +6,6 @@ public abstract class User {
     private final String password;
     private final UserType userType;
 
-//    protected User(Long id, String login, String password, UserType userType) {
-//        this.id = id;
-//        this.login = login;
-//        this.password = password;
-//        this.userType = userType;
-//    }
 
     protected User(AbstractBuilder builder) {
         this.id = builder.id;
@@ -51,6 +45,10 @@ public abstract class User {
         public abstract E build();
 
 
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getLogin() {

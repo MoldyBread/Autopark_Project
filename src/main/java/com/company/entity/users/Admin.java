@@ -11,7 +11,7 @@ public class Admin extends User{
         return new Builder();
     }
 
-    public static class Builder extends User.AbstractBuilder {
+    public static class Builder extends User.AbstractBuilder<Builder,Admin> {
 
         protected Builder self() {
             return this;
