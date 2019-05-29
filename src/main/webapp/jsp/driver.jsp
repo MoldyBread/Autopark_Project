@@ -22,9 +22,11 @@
     <p>Your work place:</p>
     <P>Bus: ${plate}</P>
     <p>Your route: ${route}</p>
-    <form action = "/driver" method="get">
+    <c:if test="${not accepted}">
+    <form action = "/driver" method="post">
         <input type="submit" value="Approve work place">
     </form>
+    </c:if>
 </c:if>
 
 

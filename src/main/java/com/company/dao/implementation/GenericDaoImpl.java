@@ -27,13 +27,11 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         T entity = null;
         try {
             //Try-with-resources
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL + table);
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL+table);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                return mapResultSetToList(resultSet);
-            }
+            return mapResultSetToList(resultSet);
         } catch (SQLException e) {
             //logger
             e.printStackTrace();
@@ -42,7 +40,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         return null;
     }
 
-    public abstract List<T> mapResultSetToList(ResultSet resultSet);
+    public abstract List<T> mapResultSetToList(ResultSet resultSet) throws SQLException;
 
     public abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 

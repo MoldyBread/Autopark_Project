@@ -1,15 +1,32 @@
 package com.company.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Route {
     private Long id;
     private int mileage;
-    private List<Bus> buses;
+    private List<String> busPlates;
 
-    public Route(Long id, int mileage, List<Bus> buses) {
+    public Route(Long id, int mileage) {
         this.id = id;
         this.mileage = mileage;
-        this.buses = buses;
+        this.busPlates = new ArrayList<>();
+    }
+
+    public void addBus(String plate){
+        busPlates.add(plate);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public List<String> getBusPlates() {
+        return busPlates;
     }
 }

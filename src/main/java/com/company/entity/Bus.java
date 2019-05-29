@@ -22,4 +22,12 @@ public class Bus {
     public Long getRouteId() {
         return routeId;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getDriverId() {
+        return driverId;
+    }
 }

@@ -1,10 +1,8 @@
 package com.company.controller;
 
-import com.company.dao.implementation.AdminDaoImpl;
-import com.company.dao.implementation.BusDaoImpl;
-import com.company.dao.implementation.Connector;
-import com.company.dao.implementation.DriverDaoImpl;
+import com.company.dao.implementation.*;
 import com.company.entity.Bus;
+import com.company.entity.Route;
 import com.company.entity.users.Admin;
 import com.company.entity.users.Driver;
 import com.company.entity.users.User;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Optional;
 
 public class LoginController extends HttpServlet {
@@ -49,9 +48,22 @@ public class LoginController extends HttpServlet {
     }
 
     private void adminForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws ServletException, IOException {
-        req.getSession().setAttribute("login", loggedUser.getLogin());
+        List<Route> routes = new RouteDaoImpl(new Connector()).findAll();
 
-        req.getRequestDispatcher("/admin").forward(req, resp);
+        List<Bus> buses = new BusDaoImpl(new Connector()).findAll();
+
+        for (Bus bus: buses) {
+            if(bus.getRouteId()!=-1){
+                routes.get(Math.toIntExact(bus.getRouteId())).addBus(bus.getPlate());
+            }
+        }
+
+        req.getSession().setAttribute("routes", routes);
+        req.getSession().setAttribute("buses", buses);
+
+        req.getSession().setAttribute("login", loggedUser.getLogin());
+//        req.getRequestDispatcher("/admin").forward(req, resp);
+        resp.sendRedirect("/admin");
     }
 
     private void driverForward(HttpServletRequest req, HttpServletResponse resp, Driver loggedUser) throws ServletException, IOException {
@@ -65,12 +77,15 @@ public class LoginController extends HttpServlet {
             Bus cureentBus=bus.get();
             req.getSession().setAttribute("plate", cureentBus.getPlate());
             req.getSession().setAttribute("route", cureentBus.getRouteId().toString());
+            req.getSession().setAttribute("accepted",loggedUser.isAccepted());
         }
         else{
             req.getSession().setAttribute("route", -1);
         }
 
-        RequestDispatcher rd = req.getRequestDispatcher("jsp/driver.jsp");
-        rd.forward(req, resp);
+//        RequestDispatcher rd = req.getRequestDispatcher("jsp/driver.jsp");
+//        rd.forward(req, resp);
+
+        resp.sendRedirect("/driver");
     }
 }

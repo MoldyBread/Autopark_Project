@@ -20,6 +20,10 @@ public class Driver extends User{
         return surname;
     }
 
+    public boolean isAccepted() {
+        return accepted;
+    }
+
     public static Builder builder(){
         return new Builder();
     }
