@@ -11,7 +11,13 @@ public class StartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/index.jsp");
-        requestDispatcher.forward(req,resp);
+        if (null == req.getSession().getAttribute("isLogged")) {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/index.jsp");
+            requestDispatcher.forward(req, resp);
+        } else if ((int) req.getSession().getAttribute("isLogged") == 1) {
+            resp.sendRedirect("/admin");
+        } else if ((int) req.getSession().getAttribute("isLogged") == 2) {
+            resp.sendRedirect("/driver");
+        }
     }
 }

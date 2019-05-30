@@ -25,7 +25,11 @@
         <th>Buses on route</th>
     </tr>
     <c:forEach items="${routes}" var="route">
-        <tr><td>${route.id}</td><td>${route.mileage}</td><td>${route.busPlates}</td></tr>
+        <tr><td>${route.id}</td><td>${route.mileage}</td><td>
+        <c:forEach items="${route.busPlates}" var="bus">
+                ${bus}<br/>
+        </c:forEach>
+        </td></tr>
     </c:forEach>
 
 </table>
@@ -39,7 +43,22 @@
         <th>Route id</th>
     </tr>
     <c:forEach items="${buses}" var="bus">
-        <tr><td>${bus.id}</td><td>${bus.plate}</td><td>${bus.driverId}</td><td>${bus.routeId}</td></tr>
+        <tr><td>${bus.id}</td><td>${bus.plate}</td><td>
+            <c:if test="${bus.driverId>-1}">
+                ${bus.driverId}
+            </c:if>
+            <c:if test="${bus.driverId<0}">
+                No driver
+            </c:if>
+        </td>
+            <td>
+                <c:if test="${bus.routeId>-1}">
+                    ${bus.routeId}
+                </c:if>
+                <c:if test="${bus.routeId<0}">
+                    No route
+                </c:if>
+        </td></tr>
     </c:forEach>
 
 </table>

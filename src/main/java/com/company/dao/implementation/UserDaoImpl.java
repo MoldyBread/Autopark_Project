@@ -12,10 +12,32 @@ import java.util.Optional;
 
 public abstract class UserDaoImpl<T extends User> extends GenericDaoImpl<T>  implements UserDao<T>{
 
-
-
     protected UserDaoImpl(String table, Connector connector) {
         super(table, connector);
+    }
+
+    @Override
+    public Optional<T> findById(Long id){
+        Connection connection = connector.getConnection();
+        T found = null;
+        try {
+            //Try-with-resources
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT * FROM "+ table +" WHERE id=?");
+
+            preparedStatement.setLong(1,id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                found=mapResultSetToEntity(resultSet);
+            }
+        } catch (SQLException e) {
+            //TODO: LOGGER
+            e.printStackTrace();
+        }
+
+        return Optional.ofNullable(found);
     }
 
     @Override

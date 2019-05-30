@@ -48,21 +48,8 @@ public class LoginController extends HttpServlet {
     }
 
     private void adminForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws ServletException, IOException {
-        List<Route> routes = new RouteDaoImpl(new Connector()).findAll();
-
-        List<Bus> buses = new BusDaoImpl(new Connector()).findAll();
-
-        for (Bus bus: buses) {
-            if(bus.getRouteId()!=-1){
-                routes.get(Math.toIntExact(bus.getRouteId())).addBus(bus.getPlate());
-            }
-        }
-
-        req.getSession().setAttribute("routes", routes);
-        req.getSession().setAttribute("buses", buses);
-
         req.getSession().setAttribute("login", loggedUser.getLogin());
-//        req.getRequestDispatcher("/admin").forward(req, resp);
+        req.getSession().setAttribute("isLogged",1);
         resp.sendRedirect("/admin");
     }
 
@@ -70,21 +57,7 @@ public class LoginController extends HttpServlet {
         req.getSession().setAttribute("id", loggedUser.getId());
         req.getSession().setAttribute("name", loggedUser.getName());
         req.getSession().setAttribute("surname", loggedUser.getSurname());
-
-        Optional<Bus> bus = new BusDaoImpl(new Connector()).findByDriverId(loggedUser.getId());
-
-        if(bus.isPresent()){
-            Bus cureentBus=bus.get();
-            req.getSession().setAttribute("plate", cureentBus.getPlate());
-            req.getSession().setAttribute("route", cureentBus.getRouteId().toString());
-            req.getSession().setAttribute("accepted",loggedUser.isAccepted());
-        }
-        else{
-            req.getSession().setAttribute("route", -1);
-        }
-
-//        RequestDispatcher rd = req.getRequestDispatcher("jsp/driver.jsp");
-//        rd.forward(req, resp);
+        req.getSession().setAttribute("isLogged",2);
 
         resp.sendRedirect("/driver");
     }
