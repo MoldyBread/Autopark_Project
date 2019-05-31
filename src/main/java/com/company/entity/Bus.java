@@ -1,6 +1,5 @@
 package com.company.entity;
 
-import com.company.entity.users.Driver;
 
 public class Bus {
     private final Long id;

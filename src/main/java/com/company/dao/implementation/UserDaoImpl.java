@@ -3,6 +3,7 @@ package com.company.dao.implementation;
 import com.company.dao.UserDao;
 import com.company.entity.users.Driver;
 import com.company.entity.users.User;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public abstract class UserDaoImpl<T extends User> extends GenericDaoImpl<T>  implements UserDao<T>{
+    private final Logger logger = Logger.getLogger(UserDaoImpl.class);
 
     protected UserDaoImpl(String table, Connector connector) {
         super(table, connector);
@@ -33,8 +35,7 @@ public abstract class UserDaoImpl<T extends User> extends GenericDaoImpl<T>  imp
                 found=mapResultSetToEntity(resultSet);
             }
         } catch (SQLException e) {
-            //TODO: LOGGER
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return Optional.ofNullable(found);
@@ -60,8 +61,7 @@ public abstract class UserDaoImpl<T extends User> extends GenericDaoImpl<T>  imp
                 found=mapResultSetToEntity(resultSet);
             }
         } catch (SQLException e) {
-            //TODO: LOGGER
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return Optional.ofNullable(found);

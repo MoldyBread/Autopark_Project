@@ -6,25 +6,51 @@
   Time: 21:14
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="TextBundle" />
+
+
+
+<html  lang="${language}">
 <head>
     <title>Main menu</title>
 </head>
 <body>
-<h1>Welcome, ${name} ${surname}</h1>
+
+<form action="" method="post">
+    <input type="hidden" name="action" value="lang">
+    <select id="language" name="language" onchange="submit()">
+        <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Russian</option>
+    </select>
+</form>
+
+
+
+<form action = "" method="post">
+    <input type="hidden" name="action" value="logout">
+    <input type="submit" value=<fmt:message key="logout"/>>
+</form>
+
+<h1><fmt:message key="welcome"/>, ${name} ${surname} </h1>
 
 <c:if test="${route < 0}">
-    <p>You are not assigned to work place yet</p>
+    <p><fmt:message key="not.assigned"/></p>
 </c:if>
 <c:if test="${route > 0}">
-    <p>Your work place:</p>
-    <P>Bus: ${plate}</P>
-    <p>Your route: ${route}</p>
+    <p><fmt:message key="workplace"/></p>
+    <P><fmt:message key="bus"/> ${plate}</P>
+    <p><fmt:message key="route"/> ${route}</p>
     <c:if test="${not accepted}">
-    <form action = "/driver" method="post">
-        <input type="submit" value="Approve work place">
+    <form action = "" method="post">
+        <input type="hidden" name="action" value="approve">
+        <input type="submit" value=<fmt:message key="approve"/>>
     </form>
     </c:if>
 </c:if>

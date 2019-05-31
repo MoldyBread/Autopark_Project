@@ -11,6 +11,9 @@ public class StartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(null==req.getSession().getAttribute("language")){
+            req.getSession().setAttribute("language","en");
+        }
         if (null == req.getSession().getAttribute("isLogged")) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/index.jsp");
             requestDispatcher.forward(req, resp);

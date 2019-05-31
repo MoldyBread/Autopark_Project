@@ -2,6 +2,7 @@ package com.company.dao.implementation;
 
 import com.company.dao.BusDao;
 import com.company.entity.Bus;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
+    private final Logger logger = Logger.getLogger(BusDaoImpl.class);
 
     public BusDaoImpl(Connector connector) {
         super("buses", connector);
@@ -50,17 +52,47 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
             preparedStatement.setLong(1,id);
 
 
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 found=mapResultSetToEntity(resultSet);
             }
         } catch (SQLException e) {
-            //logger
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return Optional.ofNullable(found);
+    }
+
+    @Override
+    public void update(long id, long routeId, long driverId) {
+        Connection connection = connector.getConnection();
+        try {
+            //Try-with-resource
+
+            Optional<Bus> settedWithDriver = findByDriverId(driverId);
+
+            if(settedWithDriver.isPresent()){
+                Bus bus = settedWithDriver.get();
+                PreparedStatement preparedStatement1 = connection
+                        .prepareStatement("UPDATE buses SET driverId=? WHERE id=?");
+                preparedStatement1.setLong(1, -1);
+                preparedStatement1.setLong(2, bus.getId());
+
+                preparedStatement1.executeUpdate();
+            }
+
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE buses SET driverId=?,routeId=? WHERE id=?");
+
+            preparedStatement.setLong(1, driverId);
+            preparedStatement.setLong(2, routeId);
+            preparedStatement.setLong(3, id);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
     }
 }

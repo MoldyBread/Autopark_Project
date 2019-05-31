@@ -3,24 +3,33 @@ package com.company.dao.implementation;
 import com.company.dao.DriverDao;
 import com.company.entity.users.Driver;
 import com.company.entity.users.UserType;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
 
-    public static final String TABLE = "drivers";
+    private final Logger logger = Logger.getLogger(DriverDaoImpl.class);
 
     public DriverDaoImpl(Connector connector) {
-        super(TABLE, connector);
+        super("drivers", connector);
     }
 
     @Override
-    public List<Driver> mapResultSetToList(ResultSet resultSet) {
-        throw new UnsupportedOperationException("Hasn't implemented yet");
+    public List<Driver> mapResultSetToList(ResultSet resultSet) throws SQLException {
+        List<Driver> drivers = new ArrayList<>();
+
+        resultSet.next();
+        while (resultSet.next()){
+            drivers.add(mapResultSetToEntity(resultSet));
+        }
+
+        return drivers;
     }
 
     @Override
@@ -57,8 +66,7 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            //TODO: LOGGER
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
 

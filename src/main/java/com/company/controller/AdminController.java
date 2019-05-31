@@ -30,7 +30,7 @@ public class AdminController extends HttpServlet {
 
             for (Bus bus : buses) {
                 if (bus.getRouteId() != -1) {
-                    routes.get(Math.toIntExact(bus.getRouteId())).addBus(bus.getPlate());
+                    routes.get(Math.toIntExact(bus.getRouteId())-1).addBus(bus.getPlate());
                 }
             }
 
@@ -43,9 +43,18 @@ public class AdminController extends HttpServlet {
         }
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/admin.jsp");
-//        requestDispatcher.forward(req,resp);
-//    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+
+        if(action.equals("logout")) {
+            req.getSession().setAttribute("isLogged",null);
+            resp.sendRedirect("/");
+        }else if (action.equals("lang")) {
+            req.getSession().setAttribute("language", req.getParameter("language"));
+            resp.sendRedirect("/admin");
+        }else {
+            resp.sendRedirect("/edit");
+        }
+    }
 }

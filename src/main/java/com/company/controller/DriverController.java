@@ -41,6 +41,8 @@ public class DriverController extends HttpServlet {
                 req.getSession().setAttribute("route", -1);
             }
 
+            req.getSession().setAttribute("lang","en");
+
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/driver.jsp");
             requestDispatcher.forward(req, resp);
         }
@@ -49,16 +51,27 @@ public class DriverController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            long id = (long)req.getSession().getAttribute("id");
-            new DriverDaoImpl(new Connector()).update(id,true);
-            req.getSession().setAttribute("accepted",true);
-        } catch (SQLException e) {
-            //TODO: logger
-            e.printStackTrace();
-        }
+        String action = req.getParameter("action");
 
-        resp.sendRedirect("/driver");
+        if(action.equals("approve")) {
+            try {
+                long id = (long) req.getSession().getAttribute("id");
+                new DriverDaoImpl(new Connector()).update(id, true);
+                req.getSession().setAttribute("accepted", true);
+            } catch (SQLException e) {
+                //TODO: logger
+                e.printStackTrace();
+            }
+
+            resp.sendRedirect("/driver");
+        }else if(action.equals("lang")){
+            req.getSession().setAttribute("language",req.getParameter("language"));
+            resp.sendRedirect("/driver");
+        }
+        else{
+            req.getSession().setAttribute("isLogged",null);
+            resp.sendRedirect("/");
+        }
     }
 
 }

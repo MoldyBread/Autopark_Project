@@ -1,6 +1,7 @@
 package com.company.dao.implementation;
 
 import com.company.dao.GenericDao;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
+
+    private final Logger logger = Logger.getLogger(DriverDaoImpl.class);
 
     private static final String FIND_ALL = "SELECT * FROM ";
 
@@ -33,8 +36,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
             return mapResultSetToList(resultSet);
         } catch (SQLException e) {
-            //logger
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return null;
@@ -43,24 +45,5 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     public abstract List<T> mapResultSetToList(ResultSet resultSet) throws SQLException;
 
     public abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
-
-
-    //    public Optional<User> findById(Integer id){
-//        Connection connection = connector.getConnection();
-//        User user = null;
-//        try {
-//            //Try-with-resources
-//            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
-//            preparedStatement.setLong(1,id);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()){
-//                user = mapResultSetToMessage(resultSet);
-//            }
-//        } catch (SQLException e) {
-//            //logger
-//            e.printStackTrace();
-//        }
-//        return Optional.ofNullable(user);
-//    }
 
 }
