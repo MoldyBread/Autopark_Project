@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
-    private final Logger logger = Logger.getLogger(DriverDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(DriverDaoImpl.class);
 
     private static final String FIND_ALL = "SELECT * FROM ";
 

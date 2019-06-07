@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public abstract class UserDaoImpl<T extends User> extends GenericDaoImpl<T>  implements UserDao<T>{
-    private final Logger logger = Logger.getLogger(UserDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
 
     protected UserDaoImpl(String table, Connector connector) {
         super(table, connector);

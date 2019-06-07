@@ -2,6 +2,7 @@ package com.company.dao.implementation;
 
 import com.company.dao.RouteDao;
 import com.company.entity.Route;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouteDaoImpl extends GenericDaoImpl<Route> implements RouteDao {
+
+    private static final Logger logger = Logger.getLogger(RouteDaoImpl.class.getSimpleName());
+
     public RouteDaoImpl(Connector connector) {
         super("routes", connector);
     }
@@ -21,6 +25,8 @@ public class RouteDaoImpl extends GenericDaoImpl<Route> implements RouteDao {
             if(route.getId()!=-1)
             routes.add(route);
         }
+
+        logger.info("Routes returned");
         return routes;
     }
 

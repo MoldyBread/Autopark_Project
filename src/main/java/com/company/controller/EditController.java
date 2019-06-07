@@ -51,6 +51,10 @@ public class EditController extends HttpServlet {
             long driverId = Long.valueOf(req.getParameter("drivers"));
             long routeId = Long.valueOf(req.getParameter("routes"));
             new BusDaoImpl(new Connector()).update(id, routeId, driverId);
+            try {
+                new DriverDaoImpl(new Connector()).update(driverId,false);
+            } catch (SQLException e) {
+            }
             resp.sendRedirect("/edit");
         }
     }

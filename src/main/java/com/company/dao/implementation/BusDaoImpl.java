@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
-    private final Logger logger = Logger.getLogger(BusDaoImpl.class);
+
+    private static final Logger logger = Logger.getLogger(BusDaoImpl.class);
 
     public BusDaoImpl(Connector connector) {
         super("buses", connector);
@@ -27,6 +28,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
             buses.add(mapResultSetToEntity(resultSet));
         }
 
+        logger.info("Buses returned");
         return buses;
     }
 

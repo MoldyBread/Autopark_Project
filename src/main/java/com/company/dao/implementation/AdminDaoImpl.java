@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class AdminDaoImpl extends UserDaoImpl<Admin> implements AdminDao {
-    private final Logger logger = Logger.getLogger(AdminDaoImpl.class);
+
+    private static final Logger logger = Logger.getLogger(AdminDaoImpl.class);
 
     public AdminDaoImpl(Connector connector) {
         super("admins", connector);
@@ -30,6 +31,7 @@ public class AdminDaoImpl extends UserDaoImpl<Admin> implements AdminDao {
         long id = resultSet.getLong("id");
         String login = resultSet.getString("login");
         String password = resultSet.getString("psswrd");
+
 
         return Admin.builder()
                 .withId(id)

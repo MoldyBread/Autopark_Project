@@ -30,7 +30,7 @@
 
 <form action="" method="post">
     <input type="hidden" name="action" value="back">
-    <input type="submit" value=<fmt:message key="logout"/>>
+    <input type="submit" value=<fmt:message key="back"/>>
 </form>
 
 <form action="" method="post">

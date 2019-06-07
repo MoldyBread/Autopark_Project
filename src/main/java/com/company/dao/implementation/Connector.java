@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connector {
-    private final Logger logger = Logger.getLogger(Connector.class);
+    private static final Logger logger = Logger.getLogger(Connector.class);
 
     private static final String URL = "jdbc:mysql://localhost:3306/autoparkdb";
     private static final String USER_NAME = "root";
@@ -17,6 +17,7 @@ public class Connector {
     public Connection getConnection(){
         try {
             DriverManager.registerDriver(new Driver());
+            logger.info("Got connection");
             return DriverManager.getConnection(URL,USER_NAME,PASSWORD);
         }catch (SQLException e){
             logger.error(e.getMessage());

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
 
-    private final Logger logger = Logger.getLogger(DriverDaoImpl.class);
+    private static final Logger logger = Logger.getLogger(DriverDaoImpl.class);
 
     public DriverDaoImpl(Connector connector) {
         super("drivers", connector);
@@ -29,6 +29,7 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
             drivers.add(mapResultSetToEntity(resultSet));
         }
 
+        logger.info("Drivers returned");
         return drivers;
     }
 
