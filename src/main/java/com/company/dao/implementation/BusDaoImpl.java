@@ -43,6 +43,29 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
     }
 
     @Override
+    public List<Bus> findInLimit(int page) {
+        Connection connection = connector.getConnection();
+        Bus entity = null;
+        try {
+            //Try-with-resources
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT * FROM buses LIMIT ?, 5");
+
+            preparedStatement.setInt(1,page*5-5);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+
+            return mapResultSetToList(resultSet);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+
+        return null;
+    }
+
+    @Override
     public Optional<Bus> findByDriverId(Long id) {
         Connection connection = connector.getConnection();
         Bus found = null;
@@ -72,7 +95,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
         try {
             //Try-with-resource
 
-            Optional<Bus> settedWithDriver = findByDriverId(driverId);
+            /*Optional<Bus> settedWithDriver = findByDriverId(driverId);
 
             if(settedWithDriver.isPresent()){
                 Bus bus = settedWithDriver.get();
@@ -82,7 +105,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
                 preparedStatement1.setLong(2, bus.getId());
 
                 preparedStatement1.executeUpdate();
-            }
+            }*/
 
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE buses SET driverId=?,routeId=? WHERE id=?");
@@ -96,5 +119,29 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
+    }
+
+    @Override
+    public int getCount() {
+
+        Connection connection = connector.getConnection();
+        try {
+            //Try-with-resource
+
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT COUNT(*) FROM buses");
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+
+        return 0;
     }
 }

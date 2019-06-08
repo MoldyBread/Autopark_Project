@@ -56,7 +56,7 @@ public class LoginController extends HttpServlet {
         req.getSession().setAttribute("isLogged", 1);
         req.getSession().setAttribute("notfound", 0);
 
-        resp.sendRedirect("/admin");
+        resp.sendRedirect("/admin?page=-1");
     }
 
     private void driverForward(HttpServletRequest req, HttpServletResponse resp, Driver loggedUser) throws ServletException, IOException {

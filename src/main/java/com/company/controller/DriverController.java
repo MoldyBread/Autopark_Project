@@ -54,14 +54,9 @@ public class DriverController extends HttpServlet {
         String action = req.getParameter("action");
 
         if(action.equals("approve")) {
-            try {
                 long id = (long) req.getSession().getAttribute("id");
                 new DriverDaoImpl(new Connector()).update(id, true);
                 req.getSession().setAttribute("accepted", true);
-            } catch (SQLException e) {
-                //TODO: logger
-                e.printStackTrace();
-            }
 
             resp.sendRedirect("/driver");
         }else if(action.equals("lang")){

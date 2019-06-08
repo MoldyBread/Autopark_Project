@@ -27,7 +27,6 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     @Override
     public List<T> findAll() {
         Connection connection = connector.getConnection();
-        T entity = null;
         try {
             //Try-with-resources
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL+table);

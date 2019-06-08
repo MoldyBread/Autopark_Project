@@ -18,7 +18,7 @@ public class StartController extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/index.jsp");
             requestDispatcher.forward(req, resp);
         } else if ((int) req.getSession().getAttribute("isLogged") == 1) {
-            resp.sendRedirect("/admin");
+            resp.sendRedirect("/admin?page=1");
         } else if ((int) req.getSession().getAttribute("isLogged") == 2) {
             resp.sendRedirect("/driver");
         }

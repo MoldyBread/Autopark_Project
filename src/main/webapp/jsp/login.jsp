@@ -18,7 +18,7 @@
     <input type="hidden" name="action" value="lang">
     <select id="language" name="language" onchange="submit()">
         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Russian</option>
+        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
     </select>
 </form>
 

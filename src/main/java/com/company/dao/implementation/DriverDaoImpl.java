@@ -1,6 +1,8 @@
 package com.company.dao.implementation;
 
+import com.company.dao.BusDao;
 import com.company.dao.DriverDao;
+import com.company.entity.Bus;
 import com.company.entity.users.Driver;
 import com.company.entity.users.UserType;
 import org.apache.log4j.Logger;
@@ -11,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
 
@@ -24,9 +27,12 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
     public List<Driver> mapResultSetToList(ResultSet resultSet) throws SQLException {
         List<Driver> drivers = new ArrayList<>();
 
-        resultSet.next();
-        while (resultSet.next()){
-            drivers.add(mapResultSetToEntity(resultSet));
+
+        while (resultSet.next()) {
+            Driver driver = mapResultSetToEntity(resultSet);
+            if (driver.getId() != -1L) {
+                drivers.add(driver);
+            }
         }
 
         logger.info("Drivers returned");
@@ -54,10 +60,23 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
     }
 
     @Override
-    public void update(long id, boolean accepted) throws SQLException {
+    public void update(long id, boolean accepted) {
         Connection connection = connector.getConnection();
         try {
             //Try-with-resources
+
+            if(!accepted) {
+                BusDao busDao = new BusDaoImpl(connector);
+                Optional<Bus> foundBus = busDao.findByDriverId(id);
+
+
+                if (foundBus.isPresent()) {
+                    Bus bus = foundBus.get();
+                    busDao.update(bus.getId(), bus.getRouteId(), -1);
+
+                }
+            }
+
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE drivers SET accepted=? WHERE id=?");
 
@@ -69,7 +88,25 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
+    }
 
+
+    @Override
+    public List<Driver> findFree() {
+
+        Connection connection = connector.getConnection();
+        try {
+            //Try-with-resources
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM drivers WHERE accepted=0");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return mapResultSetToList(resultSet);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+
+        return null;
 
     }
 }

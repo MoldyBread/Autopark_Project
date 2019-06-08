@@ -15,8 +15,6 @@
 <fmt:setBundle basename="TextBundle"/>
 
 
-
-
 <html>
 <head>
     <title>Title</title>
@@ -27,7 +25,7 @@
     <input type="hidden" name="action" value="lang">
     <select id="language" name="language" onchange="submit()">
         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Russian</option>
+        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
     </select>
 </form>
 
@@ -38,30 +36,11 @@
 
 <h1><fmt:message key="welcome"/>, ${login}</h1>
 
-
-<table border="1">
-    <caption><fmt:message key="routes"/></caption>
-    <tr>
-        <th>Id</th>
-        <th><fmt:message key="mileage"/></th>
-        <th><fmt:message key="busesonroute"/></th>
-    </tr>
-    <c:forEach items="${routes}" var="route">
-        <tr>
-            <td>${route.id}</td>
-            <td>${route.mileage}</td>
-            <td>
-                <c:forEach items="${route.busPlates}" var="bus">
-                    ${bus}<br/>
-                </c:forEach>
-            </td>
-        </tr>
-    </c:forEach>
-
-</table>
+<a href="routes"><fmt:message key="routes"/></a>
+<a href="drivers"><fmt:message key="drivers"/></a>
 
 
-<form style="margin-top: 50px" action = "" method="post">
+<form style="margin-top: 50px" action="" method="post">
     <input type="hidden" name="action" value="edit">
     <input type="hidden" name="id" value="${bus.id}">
     <input type="submit" value=<fmt:message key="edit"/>>
@@ -99,6 +78,19 @@
     </c:forEach>
 
 </table>
+
+    <c:forEach begin="1" end="${noOfPages}" var="i">
+        <c:if test="${page == i}">
+            <li style="display: inline-block">
+                <a style="pointer-events: none; cursor: default;">${i}</a>
+            </li>
+        </c:if>
+        <c:if test="${page != i}">
+            <li style="display: inline-block">
+                <a href="admin?page=${i}">${i}</a>
+            </li>
+        </c:if>
+    </c:forEach>
 
 
 </body>

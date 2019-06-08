@@ -24,7 +24,7 @@
     <input type="hidden" name="action" value="lang">
     <select id="language" name="language" onchange="submit()">
         <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Russian</option>
+        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
     </select>
 </form>
 
@@ -32,6 +32,11 @@
     <input type="hidden" name="action" value="back">
     <input type="submit" value=<fmt:message key="back"/>>
 </form>
+
+<c:if test="${success == 1}">
+    <p style="color: green"><fmt:message key="success"/></p>
+</c:if>
+
 
 <form action="" method="post">
     <input type="hidden" name="action" value="save">
@@ -68,8 +73,9 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value=<fmt:message key="save"/>></form>
+    <input type="submit" value=<fmt:message key="save"/>>
 </form>
+
 </body>
 
 

@@ -22,14 +22,20 @@ public class EditController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        //TODO: MAKE NORMAL SHOW OF IDs OF DRIVERS
         if (null == req.getSession().getAttribute("isLogged")
                 || (int) req.getSession().getAttribute("isLogged") != 1) {
             resp.sendRedirect("/");
         } else {
+            Connector connector = new Connector();
 
-            List<Driver> drivers = new DriverDaoImpl(new Connector()).findAll();
+            List<Driver> drivers = new DriverDaoImpl(connector).findFree();
+            List<Route> routes = new RouteDaoImpl(connector).findAll();
+            List<Bus> buses = new BusDaoImpl(connector).findAll();
 
             req.getSession().setAttribute("drivers", drivers);
+            req.getSession().setAttribute("buses", buses);
+            req.getSession().setAttribute("routes", routes);
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/edit.jsp");
             requestDispatcher.forward(req, resp);
@@ -41,8 +47,8 @@ public class EditController extends HttpServlet {
         String action = req.getParameter("action");
 
         if (action.equals("back")) {
-
-            resp.sendRedirect("/admin");
+            req.getSession().setAttribute("success", 0);
+            resp.sendRedirect("/admin?page=1");
         } else if (action.equals("lang")) {
             req.getSession().setAttribute("language", req.getParameter("language"));
             resp.sendRedirect("/edit");
@@ -51,10 +57,9 @@ public class EditController extends HttpServlet {
             long driverId = Long.valueOf(req.getParameter("drivers"));
             long routeId = Long.valueOf(req.getParameter("routes"));
             new BusDaoImpl(new Connector()).update(id, routeId, driverId);
-            try {
-                new DriverDaoImpl(new Connector()).update(driverId,false);
-            } catch (SQLException e) {
-            }
+
+            req.getSession().setAttribute("success", 1);
+
             resp.sendRedirect("/edit");
         }
     }
