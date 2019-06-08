@@ -61,14 +61,12 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
 
     @Override
     public void update(long id, boolean accepted) {
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resources
 
-            if(!accepted) {
+            if (!accepted) {
                 BusDao busDao = new BusDaoImpl(connector);
                 Optional<Bus> foundBus = busDao.findByDriverId(id);
-
 
                 if (foundBus.isPresent()) {
                     Bus bus = foundBus.get();
@@ -76,7 +74,6 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
 
                 }
             }
-
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE drivers SET accepted=? WHERE id=?");
 
@@ -94,8 +91,7 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
     @Override
     public List<Driver> findFree() {
 
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resources
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM drivers WHERE accepted=0");
 
@@ -106,19 +102,18 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
             logger.error(e.getMessage());
         }
 
-        return null;
+        return new ArrayList<>();
 
     }
 
     @Override
     public List<Driver> findInLimit(int page) {
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resources
             PreparedStatement preparedStatement =
                     connection.prepareStatement("SELECT * FROM drivers LIMIT ?, 5");
 
-            preparedStatement.setInt(1,page*5-4);
+            preparedStatement.setInt(1, page * 5 - 4);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -127,13 +122,12 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
             logger.error(e.getMessage());
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     public int getCount() {
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resource
 
             PreparedStatement preparedStatement = connection
@@ -143,7 +137,7 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getInt(1)-1;
+                return resultSet.getInt(1) - 1;
             }
 
         } catch (SQLException e) {

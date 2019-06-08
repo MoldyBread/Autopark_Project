@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
@@ -26,10 +27,9 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     @Override
     public List<T> findAll() {
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resources
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL+table);
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL + table);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -38,7 +38,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
             logger.error(e.getMessage());
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     public abstract List<T> mapResultSetToList(ResultSet resultSet) throws SQLException;

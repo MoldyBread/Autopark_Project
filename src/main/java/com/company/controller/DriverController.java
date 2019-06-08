@@ -6,6 +6,11 @@ import com.company.dao.implementation.Connector;
 import com.company.dao.implementation.DriverDaoImpl;
 import com.company.entity.Bus;
 import com.company.entity.users.Driver;
+import com.company.service.BusService;
+import com.company.service.DriverService;
+import com.company.service.impl.BusServiceImpl;
+import com.company.service.impl.DriverServiceImpl;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,35 +18,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Optional;
 
 
 public class DriverController extends HttpServlet {
 
+    private static final String IS_LOGGED = "isLogged";
+    private static final Logger logger = Logger.getLogger(DriverController.class);
+    private static final Connector connector = new Connector();
+    private static final DriverService driverService = new DriverServiceImpl(new DriverDaoImpl(connector));
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if(null==req.getSession().getAttribute("isLogged")
-                ||(int)req.getSession().getAttribute("isLogged")!=2){
+        if (null == req.getSession().getAttribute(IS_LOGGED)
+                || (int) req.getSession().getAttribute(IS_LOGGED) != 2) {
             resp.sendRedirect("/");
-        }else {
+        } else {
 
-            Driver driver =
-                    new DriverDaoImpl(new Connector()).findById((Long) req.getSession().getAttribute("id")).get();
+            BusService busService = new BusServiceImpl(new BusDaoImpl(connector));
 
-            Optional<Bus> bus = new BusDaoImpl(new Connector()).findByDriverId(driver.getId());
 
-            if (bus.isPresent()) {
-                Bus cureentBus = bus.get();
-                req.getSession().setAttribute("plate", cureentBus.getPlate());
-                req.getSession().setAttribute("route", cureentBus.getRouteId().toString());
-                req.getSession().setAttribute("accepted", driver.isAccepted());
-            } else {
-                req.getSession().setAttribute("route", -1);
-            }
+            Driver driver = driverService
+                    .findById((Long) req.getSession().getAttribute("id"))
+                    .get();
 
-            req.getSession().setAttribute("lang","en");
+            Optional<Bus> bus = busService.findByDriverId(driver.getId());
+
+            setWorkplaceAttributes(req, driver, bus);
+
+            req.getSession().setAttribute("lang", "en");
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/driver.jsp");
             requestDispatcher.forward(req, resp);
@@ -49,23 +55,38 @@ public class DriverController extends HttpServlet {
 
     }
 
+    private void setWorkplaceAttributes(HttpServletRequest req, Driver driver, Optional<Bus> bus) {
+        if (bus.isPresent()) {
+            Bus currentBus = bus.get();
+            req.getSession().setAttribute("plate", currentBus.getPlate());
+            req.getSession().setAttribute("route", currentBus.getRouteId().toString());
+            req.getSession().setAttribute("accepted", driver.isAccepted());
+        } else {
+            req.getSession().setAttribute("route", -1);
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
 
-        if(action.equals("approve")) {
+        switch (action) {
+            case "approve":
                 long id = (long) req.getSession().getAttribute("id");
-                new DriverDaoImpl(new Connector()).update(id, true);
+                driverService.update(id, true);
                 req.getSession().setAttribute("accepted", true);
-
-            resp.sendRedirect("/driver");
-        }else if(action.equals("lang")){
-            req.getSession().setAttribute("language",req.getParameter("language"));
-            resp.sendRedirect("/driver");
-        }
-        else{
-            req.getSession().setAttribute("isLogged",null);
-            resp.sendRedirect("/");
+                resp.sendRedirect("/driver");
+                break;
+            case "lang":
+                req.getSession().setAttribute("language", req.getParameter("language"));
+                resp.sendRedirect("/driver");
+                logger.info("Language changed");
+                break;
+            default:
+                req.getSession().setAttribute(IS_LOGGED, null);
+                resp.sendRedirect("/");
+                logger.info("Logged out");
+                break;
         }
     }
 

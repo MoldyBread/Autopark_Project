@@ -1,17 +1,19 @@
 package com.company.entity.users;
 
 
-public class Admin extends User{
+public class Admin extends User {
 
     private Admin(Builder builder) {
         super(builder);
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder extends User.AbstractBuilder<Builder,Admin> {
+
+
+    public static class Builder extends User.AbstractBuilder<Builder, Admin> {
 
         protected Builder self() {
             return this;
@@ -21,6 +23,7 @@ public class Admin extends User{
         public Admin build() {
             return new Admin(this);
         }
-
     }
+
+
 }

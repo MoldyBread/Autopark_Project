@@ -22,8 +22,9 @@ public class RouteDaoImpl extends GenericDaoImpl<Route> implements RouteDao {
         List<Route> routes = new ArrayList<>();
         while (resultSet.next()){
             Route route = mapResultSetToEntity(resultSet);
-            if(route.getId()!=-1)
-            routes.add(route);
+            if(route.getId()!=-1){
+                routes.add(route);
+            }
         }
 
         logger.info("Routes returned");

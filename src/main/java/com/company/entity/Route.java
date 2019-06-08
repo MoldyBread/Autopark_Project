@@ -14,7 +14,7 @@ public class Route {
         this.busPlates = new ArrayList<>();
     }
 
-    public void addBus(String plate){
+    public void addBus(String plate) {
         busPlates.add(plate);
     }
 

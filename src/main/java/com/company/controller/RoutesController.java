@@ -5,6 +5,11 @@ import com.company.dao.implementation.Connector;
 import com.company.dao.implementation.RouteDaoImpl;
 import com.company.entity.Bus;
 import com.company.entity.Route;
+import com.company.service.BusService;
+import com.company.service.RouteService;
+import com.company.service.impl.BusServiceImpl;
+import com.company.service.impl.RouteServiceImpl;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,19 +20,27 @@ import java.io.IOException;
 import java.util.List;
 
 public class RoutesController extends HttpServlet {
+
+    private static final String IS_LOGGED = "isLogged";
+    private static final Logger logger = Logger.getLogger(EditController.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (null == req.getSession().getAttribute("isLogged")
-                || (int) req.getSession().getAttribute("isLogged") != 1) {
+        if (null == req.getSession().getAttribute(IS_LOGGED)
+                || (int) req.getSession().getAttribute(IS_LOGGED) != 1) {
             resp.sendRedirect("/");
         } else {
-            List<Route> routes = new RouteDaoImpl(new Connector()).findAll();
+            Connector connector = new Connector();
+            BusService busService = new BusServiceImpl(new BusDaoImpl(connector));
+            RouteService routeService = new RouteServiceImpl(new RouteDaoImpl(connector));
 
-            List<Bus> buses = new BusDaoImpl(new Connector()).findAll();
+            List<Route> routes = routeService.findAll();
+
+            List<Bus> buses = busService.findAll();
 
             for (Bus bus : buses) {
                 if (bus.getRouteId() != -1) {
-                    routes.get(getIndexById(routes,bus.getRouteId())).addBus(bus.getPlate());
+                    routes.get(getIndexById(routes, bus.getRouteId())).addBus(bus.getPlate());
                 }
             }
 
@@ -38,9 +51,9 @@ public class RoutesController extends HttpServlet {
         }
     }
 
-    private int getIndexById(List<Route> routes,long id){
-        for (int i=0;i<routes.size();i++){
-            if(routes.get(i).getId()==id){
+    private int getIndexById(List<Route> routes, long id) {
+        for (int i = 0; i < routes.size(); i++) {
+            if (routes.get(i).getId() == id) {
                 return i;
             }
         }
@@ -57,6 +70,7 @@ public class RoutesController extends HttpServlet {
         } else {
             req.getSession().setAttribute("language", req.getParameter("language"));
             resp.sendRedirect("/routes");
+            logger.info("Language changed");
         }
     }
 }

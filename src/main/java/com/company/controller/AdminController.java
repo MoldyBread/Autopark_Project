@@ -1,10 +1,11 @@
 package com.company.controller;
 
 import com.company.dao.BusDao;
-import com.company.dao.implementation.AdminDaoImpl;
 import com.company.dao.implementation.BusDaoImpl;
 import com.company.dao.implementation.Connector;
 import com.company.entity.Bus;
+import com.company.service.BusService;
+import com.company.service.impl.BusServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -27,9 +28,11 @@ public class AdminController extends HttpServlet {
                 || (int) req.getSession().getAttribute(IS_LOGGED) != 1) {
             resp.sendRedirect("/");
         } else {
-            BusDao busDao = new BusDaoImpl(new Connector());
+            /*BusDao busDao = new BusDaoImpl(new Connector());*/
 
-            int count = busDao.getCount();
+            BusService busService = new BusServiceImpl(new BusDaoImpl(new Connector()));
+
+            int count = busService.getCount();
             count = count % 5 != 0 ? count / 5 + 1 : count / 5;
 
             int currentPage = 0;
@@ -46,8 +49,7 @@ public class AdminController extends HttpServlet {
                 resp.sendRedirect("/admin?page=1");
             } else {
 
-                List<Bus> buses = busDao.findInLimit(currentPage);
-
+                List<Bus> buses = busService.findInLimit(currentPage);
 
                 req.getSession().setAttribute("buses", buses);
                 req.getSession().setAttribute("noOfPages", count);
@@ -63,17 +65,21 @@ public class AdminController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
 
-        if (action.equals("logout")) {
-            req.getSession().setAttribute(IS_LOGGED, null);
-            resp.sendRedirect("/");
-            logger.info("Logged out");
-        } else if (action.equals("lang")) {
-            req.getSession().setAttribute("language", req.getParameter("language"));
-            resp.sendRedirect("/admin?page=1");
-            logger.info("Language changed");
-        } else {
-            req.getSession().setAttribute("success", 0);
-            resp.sendRedirect("/edit");
+        switch (action) {
+            case "logout":
+                req.getSession().setAttribute(IS_LOGGED, null);
+                resp.sendRedirect("/");
+                logger.info("Logged out");
+                break;
+            case "lang":
+                req.getSession().setAttribute("language", req.getParameter("language"));
+                resp.sendRedirect("/admin?page=1");
+                logger.info("Language changed");
+                break;
+            default:
+                req.getSession().setAttribute("success", 0);
+                resp.sendRedirect("/edit");
+                break;
         }
     }
 }

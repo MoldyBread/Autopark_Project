@@ -24,7 +24,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
     public List<Bus> mapResultSetToList(ResultSet resultSet) throws SQLException {
         List<Bus> buses = new ArrayList<>();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             buses.add(mapResultSetToEntity(resultSet));
         }
 
@@ -39,21 +39,19 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
         long driverId = resultSet.getLong("driverId");
         long routeId = resultSet.getLong("routeId");
 
-        return new Bus(id,login,driverId,routeId);
+        return new Bus(id, login, driverId, routeId);
     }
 
     @Override
     public List<Bus> findInLimit(int page) {
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resources
             PreparedStatement preparedStatement =
                     connection.prepareStatement("SELECT * FROM buses LIMIT ?, 5");
 
-            preparedStatement.setInt(1,page*5-5);
+            preparedStatement.setInt(1, page * 5 - 5);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
 
 
             return mapResultSetToList(resultSet);
@@ -66,20 +64,20 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
 
     @Override
     public Optional<Bus> findByDriverId(Long id) {
-        Connection connection = connector.getConnection();
         Bus found = null;
-        try {
+        try (Connection connection = connector.getConnection()) {
+
             //Try-with-resources
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT * FROM "+ table +" WHERE driverId=? ");
+                    .prepareStatement("SELECT * FROM " + table + " WHERE driverId=? ");
 
-            preparedStatement.setLong(1,id);
+            preparedStatement.setLong(1, id);
 
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                found=mapResultSetToEntity(resultSet);
+                found = mapResultSetToEntity(resultSet);
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -90,8 +88,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
 
     @Override
     public void update(long id, long routeId, long driverId) {
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resource
 
             PreparedStatement preparedStatement = connection
@@ -111,8 +108,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
     @Override
     public int getCount() {
 
-        Connection connection = connector.getConnection();
-        try {
+        try (Connection connection = connector.getConnection()) {
             //Try-with-resource
 
             PreparedStatement preparedStatement = connection

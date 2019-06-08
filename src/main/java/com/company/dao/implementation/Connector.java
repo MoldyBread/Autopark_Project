@@ -14,12 +14,12 @@ public class Connector {
     private static final String USER_NAME = "root";
     private static final String PASSWORD = "admin";
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
             DriverManager.registerDriver(new Driver());
             logger.info("Got connection");
-            return DriverManager.getConnection(URL,USER_NAME,PASSWORD);
-        }catch (SQLException e){
+            return DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+        } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new RuntimeException();
         }
