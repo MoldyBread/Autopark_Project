@@ -27,7 +27,7 @@ public class RoutesController extends HttpServlet {
 
             for (Bus bus : buses) {
                 if (bus.getRouteId() != -1) {
-                    routes.get(Math.toIntExact(bus.getRouteId()) - 1).addBus(bus.getPlate());
+                    routes.get(getIndexById(routes,bus.getRouteId())).addBus(bus.getPlate());
                 }
             }
 
@@ -36,6 +36,15 @@ public class RoutesController extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/routes.jsp");
             requestDispatcher.forward(req, resp);
         }
+    }
+
+    private int getIndexById(List<Route> routes,long id){
+        for (int i=0;i<routes.size();i++){
+            if(routes.get(i).getId()==id){
+                return i;
+            }
+        }
+        return -1;
     }
 
 

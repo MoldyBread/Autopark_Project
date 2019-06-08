@@ -67,6 +67,20 @@
         </td>
     </tr>
     </c:forEach>
+</table>
+
+<c:forEach begin="1" end="${noOfPages}" var="i">
+    <c:if test="${page == i}">
+        <li style="display: inline-block">
+            <a style="pointer-events: none; cursor: default;">${i}</a>
+        </li>
+    </c:if>
+    <c:if test="${page != i}">
+        <li style="display: inline-block">
+            <a href="drivers?page=${i}">${i}</a>
+        </li>
+    </c:if>
+</c:forEach>
 
 </body>
 </html>

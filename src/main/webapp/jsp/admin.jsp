@@ -37,7 +37,7 @@
 <h1><fmt:message key="welcome"/>, ${login}</h1>
 
 <a href="routes"><fmt:message key="routes"/></a>
-<a href="drivers"><fmt:message key="drivers"/></a>
+<a href="drivers?page=1"><fmt:message key="drivers"/></a>
 
 
 <form style="margin-top: 50px" action="" method="post">

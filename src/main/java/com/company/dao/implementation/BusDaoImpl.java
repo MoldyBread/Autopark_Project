@@ -45,7 +45,6 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
     @Override
     public List<Bus> findInLimit(int page) {
         Connection connection = connector.getConnection();
-        Bus entity = null;
         try {
             //Try-with-resources
             PreparedStatement preparedStatement =
@@ -62,7 +61,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
             logger.error(e.getMessage());
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -94,18 +93,6 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
         Connection connection = connector.getConnection();
         try {
             //Try-with-resource
-
-            /*Optional<Bus> settedWithDriver = findByDriverId(driverId);
-
-            if(settedWithDriver.isPresent()){
-                Bus bus = settedWithDriver.get();
-                PreparedStatement preparedStatement1 = connection
-                        .prepareStatement("UPDATE buses SET driverId=? WHERE id=?");
-                preparedStatement1.setLong(1, -1);
-                preparedStatement1.setLong(2, bus.getId());
-
-                preparedStatement1.executeUpdate();
-            }*/
 
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE buses SET driverId=?,routeId=? WHERE id=?");

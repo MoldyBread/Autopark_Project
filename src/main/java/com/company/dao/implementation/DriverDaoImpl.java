@@ -109,4 +109,47 @@ public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
         return null;
 
     }
+
+    @Override
+    public List<Driver> findInLimit(int page) {
+        Connection connection = connector.getConnection();
+        try {
+            //Try-with-resources
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT * FROM drivers LIMIT ?, 5");
+
+            preparedStatement.setInt(1,page*5-4);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return mapResultSetToList(resultSet);
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+
+        return null;
+    }
+
+    @Override
+    public int getCount() {
+        Connection connection = connector.getConnection();
+        try {
+            //Try-with-resource
+
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("SELECT COUNT(*) FROM drivers");
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1)-1;
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+
+        return 0;
+    }
 }

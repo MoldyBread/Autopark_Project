@@ -22,7 +22,6 @@ public class EditController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //TODO: MAKE NORMAL SHOW OF IDs OF DRIVERS
         if (null == req.getSession().getAttribute("isLogged")
                 || (int) req.getSession().getAttribute("isLogged") != 1) {
             resp.sendRedirect("/");
