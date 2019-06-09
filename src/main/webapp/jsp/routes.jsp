@@ -15,7 +15,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Routes</title>
 </head>
 <body>
 <form action="" method="post">

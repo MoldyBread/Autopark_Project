@@ -7,37 +7,37 @@
 
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>com.company.controller.LoginController</servlet-class>
+        <servlet-class>com.autopark.controller.LoginController</servlet-class>
     </servlet>
 
     <servlet>
     <servlet-name>driver</servlet-name>
-    <servlet-class>com.company.controller.DriverController</servlet-class>
+    <servlet-class>com.autopark.controller.DriverController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>admin</servlet-name>
-        <servlet-class>com.company.controller.AdminController</servlet-class>
+        <servlet-class>com.autopark.controller.AdminController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>start</servlet-name>
-        <servlet-class>com.company.controller.StartController</servlet-class>
+        <servlet-class>com.autopark.controller.StartController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>edit</servlet-name>
-        <servlet-class>com.company.controller.EditController</servlet-class>
+        <servlet-class>com.autopark.controller.EditController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>drivers</servlet-name>
-        <servlet-class>com.company.controller.DriversController</servlet-class>
+        <servlet-class>com.autopark.controller.DriversController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>routes</servlet-name>
-        <servlet-class>com.company.controller.RoutesController</servlet-class>
+        <servlet-class>com.autopark.controller.RoutesController</servlet-class>
     </servlet>
 
     <servlet-mapping>

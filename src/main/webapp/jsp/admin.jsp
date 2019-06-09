@@ -17,7 +17,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Main menu</title>
 </head>
 <body>
 
