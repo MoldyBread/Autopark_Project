@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller of drivers table for admin
+ *
+ * @author Liash Danylo
+ */
 public class DriversController extends HttpServlet {
 
     private static final String IS_LOGGED = "isLogged";

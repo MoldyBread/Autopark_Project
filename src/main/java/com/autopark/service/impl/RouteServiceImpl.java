@@ -6,6 +6,12 @@ import com.autopark.service.RouteService;
 
 import java.util.List;
 
+/**
+ *
+ * Implementation of RouteService
+ *
+ * @author Liash Danylo
+ */
 public class RouteServiceImpl implements RouteService {
 
     private RouteDao routeDao;

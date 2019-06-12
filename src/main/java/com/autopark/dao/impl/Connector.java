@@ -7,6 +7,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+/**
+ *
+ * Class that rules with db connection (jdbc)
+ *
+ * @author Liash Danylo
+ */
 public class Connector {
     private static final Logger logger = Logger.getLogger(Connector.class);
 

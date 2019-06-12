@@ -6,6 +6,12 @@ import com.autopark.service.AdminService;
 
 import java.util.Optional;
 
+/**
+ *
+ * Implementation of AdminService
+ *
+ * @author Liash Danylo
+ */
 public class AdminServiceImpl implements AdminService {
 
     private AdminDao adminDao;

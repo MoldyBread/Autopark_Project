@@ -1,6 +1,12 @@
 package com.autopark.entity.users;
 
 
+/**
+ *
+ * Class that represents user type of ADMIN
+ *
+ * @author Liash Danylo
+ */
 public class Admin extends User {
 
     private Admin(Builder builder) {
@@ -11,8 +17,11 @@ public class Admin extends User {
         return new Builder();
     }
 
-
-
+    /**
+     *
+     * Builder class for Admin
+     *
+     */
     public static class Builder extends User.AbstractBuilder<Builder, Admin> {
 
         protected Builder self() {

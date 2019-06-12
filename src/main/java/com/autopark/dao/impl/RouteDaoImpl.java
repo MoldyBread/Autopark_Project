@@ -9,6 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * Implementation of RouteDao
+ *
+ * @author Liash Danylo
+ */
 public class RouteDaoImpl extends GenericDaoImpl<Route> implements RouteDao {
 
     private static final Logger logger = Logger.getLogger(RouteDaoImpl.class.getSimpleName());

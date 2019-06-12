@@ -10,6 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * Implementation of GenericDao
+ *
+ * @author Liash Danylo
+ */
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     private static final Logger logger = Logger.getLogger(DriverDaoImpl.class);
@@ -41,8 +47,22 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         return new ArrayList<>();
     }
 
+    /**
+     * Maps result set to list of entities
+     *
+     * @param resultSet to process
+     * @return List of entities
+     * @throws SQLException
+     */
     public abstract List<T> mapResultSetToList(ResultSet resultSet) throws SQLException;
 
+    /**
+     * Maps result set to entity
+     *
+     * @param resultSet to process
+     * @return Entity if result set not null
+     * @throws SQLException
+     */
     public abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;
 
 }

@@ -10,6 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ *
+ * Implementation of UserDao
+ *
+ * @author Liash Danylo
+ */
 public abstract class UserDaoImpl<T extends User> extends GenericDaoImpl<T> implements UserDao<T> {
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
 

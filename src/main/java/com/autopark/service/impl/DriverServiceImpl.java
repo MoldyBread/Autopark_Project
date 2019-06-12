@@ -7,6 +7,12 @@ import com.autopark.service.DriverService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Implementation of DriverService
+ *
+ * @author Liash Danylo
+ */
 public class DriverServiceImpl implements DriverService {
 
     private DriverDao driverDao;

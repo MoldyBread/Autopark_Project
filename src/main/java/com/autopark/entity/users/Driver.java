@@ -2,6 +2,12 @@ package com.autopark.entity.users;
 
 import java.util.Objects;
 
+/**
+ *
+ * Class that represents user type of DRIVER
+ *
+ * @author Liash Danylo
+ */
 public class Driver extends User {
     private final String name;
     private final String surname;
@@ -14,22 +20,44 @@ public class Driver extends User {
         this.accepted = builder.accepted;
     }
 
+    /**
+     * Name getter
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Surname getter
+     * @return surname
+     */
     public String getSurname() {
         return surname;
     }
 
+    /**
+     * Workplace acceptation getter
+     *
+     * @return acceptation of worplace
+     */
     public boolean isAccepted() {
         return accepted;
     }
 
+    /**
+     * Builder of driver
+     * @return builder for driver
+     */
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     *
+     * Builder class for Driver
+     *
+     */
     public static class Builder extends User.AbstractBuilder<Builder, Driver> {
         private String name;
         private String surname;

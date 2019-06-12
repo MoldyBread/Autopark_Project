@@ -23,6 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller of bus editor for admin
+ *
+ * @author Liash Danylo
+ */
 public class EditController extends HttpServlet {
 
     private static final String IS_LOGGED = "isLogged";
@@ -73,6 +78,14 @@ public class EditController extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * Void for bus save to db
+     *
+     * @param req request
+     * @param resp response
+     * @throws IOException
+     */
     private void editBus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         long id = Long.valueOf(req.getParameter("busId"));
         long driverId = Long.valueOf(req.getParameter("drivers"));

@@ -3,6 +3,13 @@ package com.autopark.entity;
 
 import java.util.Objects;
 
+
+/**
+ *
+ * Class that represents bus entity
+ *
+ * @author Liash Danylo
+ */
 public class Bus {
     private final Long id;
     private final String plate;
@@ -16,18 +23,34 @@ public class Bus {
         this.routeId = routeId;
     }
 
+    /**
+     * plate getter
+     * @return plate
+     */
     public String getPlate() {
         return plate;
     }
 
+    /**
+     * routeId getter
+     * @return routeId
+     */
     public Long getRouteId() {
         return routeId;
     }
 
+    /**
+     * Id getter
+     * @return Id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * driverId getter
+     * @return driverId
+     */
     public Long getDriverId() {
         return driverId;
     }

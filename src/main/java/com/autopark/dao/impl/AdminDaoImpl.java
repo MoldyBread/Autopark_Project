@@ -9,6 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ *
+ * Implementation of AdminDao
+ *
+ * @author Liash Danylo
+ */
 public class AdminDaoImpl extends UserDaoImpl<Admin> implements AdminDao {
 
     private static final Logger logger = Logger.getLogger(AdminDaoImpl.class);

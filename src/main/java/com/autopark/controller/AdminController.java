@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller of admin view
+ *
+ * @author Liash Danylo
+ */
 public class AdminController extends HttpServlet {
 
     private static final String IS_LOGGED = "isLogged";

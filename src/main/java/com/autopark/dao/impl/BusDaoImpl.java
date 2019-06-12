@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Implementation of BusDao
+ *
+ * @author Liash Danylo
+ */
 public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
 
     private static final Logger logger = Logger.getLogger(BusDaoImpl.class);
@@ -106,6 +112,13 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
         }
     }
 
+    /**
+     * Resets user in bus to -1
+     *
+     * @param driverId value to find by driver id
+     * @param connection connection with db
+     * @throws SQLException
+     */
     private void resetLast(long driverId, Connection connection) throws SQLException {
         Optional<Bus> settedWithDriver = findByDriverId(driverId);
 

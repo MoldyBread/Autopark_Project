@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Implementation of DriverDao
+ *
+ * @author Liash Danylo
+ */
 public class DriverDaoImpl extends UserDaoImpl<Driver> implements DriverDao {
 
     private static final Logger logger = Logger.getLogger(DriverDaoImpl.class);

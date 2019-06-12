@@ -20,6 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Controller of login view
+ *
+ * @author Liash Danylo
+ */
 public class LoginController extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(LoginController.class);
@@ -62,6 +67,14 @@ public class LoginController extends HttpServlet {
         }
     }
 
+    /**
+     * Method for case if user not found
+     *
+     * @param req request
+     * @param resp response
+     * @throws ServletException
+     * @throws IOException
+     */
     private void notFoundForward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().setAttribute(NOT_FOUND, 1);
         RequestDispatcher rd = req.getRequestDispatcher("jsp/login.jsp");
@@ -69,6 +82,13 @@ public class LoginController extends HttpServlet {
         logger.warn("Login or password not found");
     }
 
+    /**
+     * Method for case if the user is admin
+     *
+     * @param req request
+     * @param resp response
+     * @throws IOException
+     */
     private void adminForward(HttpServletRequest req, HttpServletResponse resp, User loggedUser) throws IOException {
         req.getSession().setAttribute("login", loggedUser.getLogin());
         req.getSession().setAttribute("isLogged", 1);
@@ -79,6 +99,13 @@ public class LoginController extends HttpServlet {
         resp.sendRedirect("/admin?page=1");
     }
 
+    /**
+     * Method for case if the user is driver
+     *
+     * @param req request
+     * @param resp response
+     * @throws IOException
+     */
     private void driverForward(HttpServletRequest req, HttpServletResponse resp, Driver loggedUser) throws IOException {
         req.getSession().setAttribute("id", loggedUser.getId());
         req.getSession().setAttribute("name", loggedUser.getName());

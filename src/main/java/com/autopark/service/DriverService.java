@@ -5,6 +5,12 @@ import com.autopark.entity.users.Driver;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Interface class for actions with DriverDao
+ *
+ * @author Liash Danylo
+ */
 public interface DriverService {
     Optional<Driver> findById(Long id);
 

@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Controller of start page view
+ *
+ * @author Liash Danylo
+ */
 public class StartController extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(LoginController.class);

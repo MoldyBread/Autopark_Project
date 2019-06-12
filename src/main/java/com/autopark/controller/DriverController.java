@@ -20,7 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-
+/**
+ * Controller of driver view
+ *
+ * @author Liash Danylo
+ */
 public class DriverController extends HttpServlet {
 
     private static final String IS_LOGGED = "isLogged";

@@ -7,6 +7,12 @@ import com.autopark.service.BusService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * Implementation of BusService
+ *
+ * @author Liash Danylo
+ */
 public class BusServiceImpl implements BusService {
 
     private BusDao busDao;

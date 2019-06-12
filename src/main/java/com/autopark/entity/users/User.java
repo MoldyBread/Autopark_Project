@@ -2,6 +2,12 @@ package com.autopark.entity.users;
 
 import java.util.Objects;
 
+/**
+ *
+ * Class that represents abstract user
+ *
+ * @author Liash Danylo
+ */
 public abstract class User {
     private final Long id;
     private final String login;
@@ -16,6 +22,12 @@ public abstract class User {
         this.userType = builder.userType;
     }
 
+    /**
+     * Builder abstract class to extend
+     *
+     * @param <T> builder extension
+     * @param <E> user extension
+     */
     public abstract static class AbstractBuilder<T extends AbstractBuilder, E extends User> {
         private Long id;
         private String login;
@@ -47,10 +59,18 @@ public abstract class User {
         public abstract E build();
     }
 
+    /**
+     * Id getter
+     * @return id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Login getter
+     * @return login
+     */
     public String getLogin() {
         return login;
     }

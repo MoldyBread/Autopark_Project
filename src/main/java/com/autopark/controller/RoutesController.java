@@ -19,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller of routes table for admin
+ *
+ * @author Liash Danylo
+ */
 public class RoutesController extends HttpServlet {
 
     private static final String IS_LOGGED = "isLogged";
@@ -51,6 +56,13 @@ public class RoutesController extends HttpServlet {
         }
     }
 
+    /**
+     * Method that returns right index of route by id
+     *
+     * @param routes routes to  process
+     * @param id id of route to find index
+     * @return index of route by id in list
+     */
     private int getIndexById(List<Route> routes, long id) {
         for (int i = 0; i < routes.size(); i++) {
             if (routes.get(i).getId() == id) {
