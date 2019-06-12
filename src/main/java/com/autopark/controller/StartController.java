@@ -1,5 +1,7 @@
 package com.autopark.controller;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import java.io.IOException;
 
 public class StartController extends HttpServlet {
 
+    private static final Logger logger = Logger.getLogger(LoginController.class);
     private static final String IS_LOGGED = "isLogged";
 
     @Override
@@ -24,5 +27,12 @@ public class StartController extends HttpServlet {
         } else if ((int) req.getSession().getAttribute(IS_LOGGED) == 2) {
             resp.sendRedirect("/driver");
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().setAttribute("language", req.getParameter("language"));
+        resp.sendRedirect("/");
+        logger.info("Language changed");
     }
 }

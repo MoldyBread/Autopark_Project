@@ -28,7 +28,7 @@ public class EditController extends HttpServlet {
     private static final String IS_LOGGED = "isLogged";
     private static final Logger logger = Logger.getLogger(EditController.class);
     private static final Connector connector = new Connector();
-    private final BusService busService = new BusServiceImpl(new BusDaoImpl(connector));
+    private static final BusService busService = new BusServiceImpl(new BusDaoImpl(connector));
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

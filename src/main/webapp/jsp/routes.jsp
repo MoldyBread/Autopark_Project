@@ -15,20 +15,27 @@
 
 <html>
 <head>
+    <style>
+        <%@include file="stylesheet/routes.css" %>
+    </style>
     <title>Routes</title>
 </head>
 <body>
-<form action="" method="post">
-    <input type="hidden" name="action" value="lang">
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
-    </select>
-</form>
+<header>
+    <h1 class="auto">Autopark</h1>
+    <form class="box" action="" method="post">
+        <input type="hidden" name="action" value="lang">
+        <select id="language" name="language" onchange="submit()">
+            <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+            <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
+        </select>
+    </form>
+</header>
 
-<form action="" method="post">
+
+<form style="float: left" action="" method="post">
     <input type="hidden" name="action" value="back">
-    <input type="submit" value=<fmt:message key="back"/>>
+    <input class="button" type="submit" value=<fmt:message key="back"/>>
 </form>
 
 <table border="1">

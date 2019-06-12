@@ -90,6 +90,7 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
     public void update(long id, long routeId, long driverId) {
         try (Connection connection = connector.getConnection()) {
             //Try-with-resource
+            resetLast(driverId, connection);
 
             PreparedStatement preparedStatement = connection
                     .prepareStatement("UPDATE buses SET driverId=?,routeId=? WHERE id=?");
@@ -102,6 +103,20 @@ public class BusDaoImpl extends GenericDaoImpl<Bus> implements BusDao {
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
+        }
+    }
+
+    private void resetLast(long driverId, Connection connection) throws SQLException {
+        Optional<Bus> settedWithDriver = findByDriverId(driverId);
+
+        if(settedWithDriver.isPresent()){
+            Bus bus = settedWithDriver.get();
+            PreparedStatement preparedStatement1 = connection
+                    .prepareStatement("UPDATE buses SET driverId=? WHERE id=?");
+            preparedStatement1.setLong(1, -1);
+            preparedStatement1.setLong(2, bus.getId());
+
+            preparedStatement1.executeUpdate();
         }
     }
 

@@ -20,7 +20,7 @@ public class DriversController extends HttpServlet {
     private static final String IS_LOGGED = "isLogged";
     private static final Logger logger = Logger.getLogger(DriversController.class);
     private static final Connector connector = new Connector();
-    private final DriverService driverService = new DriverServiceImpl(new DriverDaoImpl(connector));
+    private static final DriverService driverService = new DriverServiceImpl(new DriverDaoImpl(connector));
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

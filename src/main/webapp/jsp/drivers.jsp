@@ -15,21 +15,27 @@
 
 <html>
 <head>
+    <style>
+        <%@include file="stylesheet/drivers.css" %>
+    </style>
     <title>Drivers</title>
 </head>
 <body>
 
-<form action="" method="post">
-    <input type="hidden" name="action" value="lang">
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
-    </select>
-</form>
+<header>
+    <h1 class="auto">Autopark</h1>
+    <form class="box" action="" method="post">
+        <input type="hidden" name="action" value="lang">
+        <select id="language" name="language" onchange="submit()">
+            <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+            <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
+        </select>
+    </form>
+</header>
 
-<form action="" method="post">
+<form style="float: left" action="" method="post">
     <input type="hidden" name="action" value="back">
-    <input type="submit" value=<fmt:message key="back"/>>
+    <input class="button" type="submit" value=<fmt:message key="back"/>>
 </form>
 
 <table border="1">
@@ -42,45 +48,46 @@
         <th></th>
     </tr>
     <c:forEach items="${drivers}" var="driver">
-    <tr>
-        <td>${driver.id}</td>
-        <td>${driver.name}</td>
-        <td>${driver.surname}</td>
-        <td>
-            <c:choose>
-                <c:when test="${driver.accepted}">
-                    <fmt:message key="yes"/>
-                </c:when>
-                <c:otherwise>
-                    <fmt:message key="no"/>
-                </c:otherwise>
-            </c:choose>
-        </td>
-        <td>
-            <c:if test="${driver.accepted}">
-                <form action="" method="post">
-                    <input type="hidden" name="action" value="free">
-                    <input type="hidden" name="id" value=${driver.id}>
-                    <input type="submit" value=<fmt:message key="free"/>>
-                </form>
-            </c:if>
-        </td>
-    </tr>
+        <tr>
+            <td>${driver.id}</td>
+            <td>${driver.name}</td>
+            <td>${driver.surname}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${driver.accepted}">
+                        <fmt:message key="yes"/>
+                    </c:when>
+                    <c:otherwise>
+                        <fmt:message key="no"/>
+                    </c:otherwise>
+                </c:choose>
+            </td>
+            <td>
+                <c:if test="${driver.accepted}">
+                    <form style="margin-top: 5px" action="" method="post">
+                        <input type="hidden" name="action" value="free">
+                        <input type="hidden" name="id" value=${driver.id}>
+                        <input style="font-size: 14px" class="button" type="submit" value=<fmt:message key="free"/>>
+                    </form>
+                </c:if>
+            </td>
+        </tr>
     </c:forEach>
 </table>
 
-<c:forEach begin="1" end="${noOfPages}" var="i">
-    <c:if test="${page == i}">
-        <li style="display: inline-block">
-            <a style="pointer-events: none; cursor: default;">${i}</a>
-        </li>
-    </c:if>
-    <c:if test="${page != i}">
-        <li style="display: inline-block">
-            <a href="drivers?page=${i}">${i}</a>
-        </li>
-    </c:if>
-</c:forEach>
-
+<div class="pagination">
+    <c:forEach begin="1" end="${noOfPages}" var="i">
+        <c:if test="${page == i}">
+            <li style="display: inline-block">
+                <a class="active" style="pointer-events: none; cursor: default;">${i}</a>
+            </li>
+        </c:if>
+        <c:if test="${page != i}">
+            <li style="display: inline-block">
+                <a href="drivers?page=${i}">${i}</a>
+            </li>
+        </c:if>
+    </c:forEach>
+</div>
 </body>
 </html>

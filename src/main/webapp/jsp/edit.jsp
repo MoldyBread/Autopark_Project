@@ -16,65 +16,73 @@
 
 <html>
 <head>
+    <style>
+        <%@include file="stylesheet/edit.css" %>
+    </style>
     <title>Edit</title>
 </head>
 <body>
 
-<form action="" method="post">
-    <input type="hidden" name="action" value="lang">
-    <select id="language" name="language" onchange="submit()">
-        <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
-        <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
-    </select>
-</form>
+<header>
+    <h1 class="auto">Autopark</h1>
+    <form class="box" action="" method="post">
+        <input type="hidden" name="action" value="lang">
+        <select id="language" name="language" onchange="submit()">
+            <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
+            <option value="ru" ${language == 'ru' ? 'selected' : ''}>Ukrainian</option>
+        </select>
+    </form>
+</header>
 
-<form action="" method="post">
+<form style="float: left;" action="" method="post">
     <input type="hidden" name="action" value="back">
-    <input type="submit" value=<fmt:message key="back"/>>
+    <input class="button" type="submit" value=<fmt:message key="back"/>>
 </form>
 
-<c:if test="${success == 1}">
-    <p style="color: green"><fmt:message key="success"/></p>
-</c:if>
+<div class="info">
+    <c:if test="${success == 1}">
+        <p style="color: green"><fmt:message key="success"/></p>
+    </c:if>
 
-
-<form action="" method="post">
-    <input type="hidden" name="action" value="save">
-    <table style="with: 50%">
-        <tr>
-            <td><fmt:message key="busid"/>:</td>
-            <td><select name="busId">
-                <c:forEach items="${buses}" var="bus">
-                    <option value=${bus.id}>${bus.id}</option>
-                </c:forEach>
-            </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td><fmt:message key="driverid"/>:</td>
-            <td><select name="drivers">
-                <option value="-1"><fmt:message key="nodriver"/></option>
-                <c:forEach items="${drivers}" var="driver">
-                    <option value=${driver.id}>${driver.id}</option>
-                </c:forEach>
-            </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td><fmt:message key="routeid"/>:</td>
-            <td><select name="routes">
-                <option value="-1"><fmt:message key="noroute"/></option>
-                <c:forEach items="${routes}" var="route">
-                    <option value=${route.id}>${route.id}</option>
-                </c:forEach>
-            </select>
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value=<fmt:message key="save"/>>
-</form>
+    <form action="" method="post">
+        <input type="hidden" name="action" value="save">
+        <table style="with: 50%; margin-left: 250px; font-size: 25px;">
+            <tr class="highlight"><td></td><td></td></tr>
+            <tr style="margin-top: 20px">
+                <td><fmt:message key="busid"/>:</td>
+                <td><select class="slc" name="busId">
+                    <c:forEach items="${buses}" var="bus">
+                        <option value=${bus.id}>${bus.id}</option>
+                    </c:forEach>
+                </select>
+                </td>
+            </tr>
+            <tr class="highlight"><td></td><td></td></tr>
+            <tr style="margin-top: 20px">
+                <td><fmt:message key="driverid"/>:</td>
+                <td><select class="slc" name="drivers">
+                    <option value="-1"><fmt:message key="nodriver"/></option>
+                    <c:forEach items="${drivers}" var="driver">
+                        <option value=${driver.id}>${driver.id}</option>
+                    </c:forEach>
+                </select>
+                </td>
+            </tr>
+            <tr class="highlight"><td></td><td></td></tr>
+            <tr style="margin-top: 20px">
+                <td><fmt:message key="routeid"/>:</td>
+                <td><select class="slc" name="routes">
+                    <option value="-1"><fmt:message key="noroute"/></option>
+                    <c:forEach items="${routes}" var="route">
+                        <option value=${route.id}>${route.id}</option>
+                    </c:forEach>
+                </select>
+                </td>
+            </tr>
+        </table>
+        <input class="button" type="submit" value=<fmt:message key="save"/>>
+    </form>
+</div>
 
 </body>
 
